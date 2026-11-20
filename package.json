@@ -1,0 +1,452 @@
+{
+  "name": "inbox-for-github",
+  "author": "nathanm95",
+  "version": "1.0.0",
+  "keywords": [
+    "pebble-app",
+    "pebble-plugin"
+  ],
+  "private": true,
+  "dependencies": {},
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "build": "pebble build",
+    "hostcheck": "tools/hostcheck.sh build/inbox-for-github.pbw",
+    "appcheck": "tools/hostcheck.sh --app build/inbox-for-github.pbw"
+  },
+  "pebble": {
+    "displayName": "Inbox for GitHub",
+    "uuid": "adb4f7c0-171e-48a0-911a-2caa057949f9",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "basalt",
+      "chalk",
+      "diorite",
+      "emery",
+      "flint",
+      "gabbro"
+    ],
+    "watchapp": {
+      "watchface": false
+    },
+    "messageKeys": [
+      "Cmd",
+      "Kind",
+      "Index",
+      "Count",
+      "Id",
+      "Title",
+      "Sub",
+      "State",
+      "Flags",
+      "Group",
+      "Text",
+      "Updated",
+      "Notice",
+      "Act",
+      "Ok",
+      "Repo",
+      "Login",
+      "Unread",
+      "Reviews",
+      "Prs",
+      "Failing",
+      "Builds",
+      "Broken"
+    ],
+    "resources": {
+      "media": [
+        {
+          "type": "bitmap",
+          "name": "MENU_ICON",
+          "file": "images/inbox_25.png",
+          "menuIcon": true
+        }
+      ]
+    },
+    "configPage": "src/config.html",
+    "usesPermissions": [
+      {
+        "name": "Internet",
+        "parameters": {
+          "domains": [
+            "api.github.com",
+            "github.com"
+          ]
+        }
+      }
+    ],
+    "plugin": {
+      "description": "The signed-in user's GitHub work, read with their own token: unread notifications, pull requests waiting for their review, their own open pull requests with check and review status, the latest build on the default branch of repositories they chose, and their contributions. code/inbox is one summary of all of it. code/notification is one instance per notification (instanceId = GitHub's thread id). code/review_request and code/pull_request are one instance per pull request (instanceId = owner/repo#number). code/build is one instance per chosen repository (instanceId = owner/repo). code/repo lists the repositories chosen in settings, and which one takes new issues. code/contributions is today's count, the streak and the last two weeks day by day. Unofficial: not made by or affiliated with GitHub.",
+      "script": "src/plugin/index.js",
+      "sources": [
+        {
+          "category": "code",
+          "items": [
+            "inbox"
+          ],
+          "properties": {
+            "unread": [
+              "numericValue",
+              "shortText"
+            ],
+            "reviews": [
+              "numericValue",
+              "shortText"
+            ],
+            "pull_requests": [
+              "numericValue",
+              "shortText"
+            ],
+            "failing": [
+              "numericValue",
+              "shortText"
+            ],
+            "builds_failing": [
+              "numericValue",
+              "shortText"
+            ],
+            "status": [
+              "shortText",
+              "longText"
+            ],
+            "latest": [
+              "shortText",
+              "longText"
+            ],
+            "login": [
+              "shortText"
+            ],
+            "updated": [
+              "timestamp",
+              "shortText"
+            ]
+          },
+          "supportsMultiple": false,
+          "suggestedRefreshIntervalSec": 120
+        },
+        {
+          "category": "code",
+          "items": [
+            "notification"
+          ],
+          "properties": {
+            "title": [
+              "shortText",
+              "longText"
+            ],
+            "repo": [
+              "shortText"
+            ],
+            "number": [
+              "numericValue"
+            ],
+            "kind": [
+              "shortText"
+            ],
+            "reason": [
+              "shortText"
+            ],
+            "unread": [
+              "boolean"
+            ],
+            "author": [
+              "shortText"
+            ],
+            "latest": [
+              "longText"
+            ],
+            "updated": [
+              "timestamp",
+              "shortText"
+            ]
+          },
+          "supportsMultiple": true,
+          "suggestedRefreshIntervalSec": 120
+        },
+        {
+          "category": "code",
+          "items": [
+            "review_request",
+            "pull_request"
+          ],
+          "properties": {
+            "title": [
+              "shortText",
+              "longText"
+            ],
+            "repo": [
+              "shortText"
+            ],
+            "number": [
+              "numericValue"
+            ],
+            "author": [
+              "shortText"
+            ],
+            "checks": [
+              "shortText"
+            ],
+            "failing": [
+              "boolean"
+            ],
+            "running": [
+              "boolean"
+            ],
+            "review": [
+              "shortText"
+            ],
+            "approved": [
+              "boolean"
+            ],
+            "draft": [
+              "boolean"
+            ],
+            "latest": [
+              "longText"
+            ],
+            "updated": [
+              "timestamp",
+              "shortText"
+            ]
+          },
+          "supportsMultiple": true,
+          "suggestedRefreshIntervalSec": 180
+        },
+        {
+          "category": "code",
+          "items": [
+            "build"
+          ],
+          "properties": {
+            "repo": [
+              "shortText"
+            ],
+            "branch": [
+              "shortText"
+            ],
+            "status": [
+              "shortText",
+              "longText"
+            ],
+            "failing": [
+              "boolean"
+            ],
+            "running": [
+              "boolean"
+            ],
+            "workflow": [
+              "shortText"
+            ],
+            "commit": [
+              "shortText",
+              "longText"
+            ],
+            "updated": [
+              "timestamp",
+              "shortText"
+            ]
+          },
+          "supportsMultiple": true,
+          "suggestedRefreshIntervalSec": 180
+        },
+        {
+          "category": "code",
+          "items": [
+            "repo"
+          ],
+          "properties": {
+            "name": [
+              "shortText"
+            ],
+            "issues": [
+              "boolean"
+            ],
+            "builds": [
+              "boolean"
+            ]
+          },
+          "supportsMultiple": true,
+          "suggestedRefreshIntervalSec": 3600
+        },
+        {
+          "category": "code",
+          "items": [
+            "contributions"
+          ],
+          "properties": {
+            "today": [
+              "numericValue",
+              "shortText"
+            ],
+            "streak": [
+              "numericValue",
+              "shortText"
+            ],
+            "week": [
+              "numericValue",
+              "shortText"
+            ],
+            "year": [
+              "numericValue",
+              "shortText"
+            ],
+            "daily": [
+              "series.numericValue"
+            ],
+            "updated": [
+              "timestamp",
+              "shortText"
+            ]
+          },
+          "supportsMultiple": false,
+          "suggestedRefreshIntervalSec": 1800
+        }
+      ],
+      "actions": [
+        {
+          "name": "mark_read",
+          "description": "Mark one GitHub notification as read. It stays in the inbox.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Id of a code/notification instance (GitHub's thread id)."
+              }
+            },
+            "required": [
+              "instanceId"
+            ]
+          },
+          "targets": [
+            "code/notification"
+          ]
+        },
+        {
+          "name": "mark_done",
+          "description": "Mark one GitHub notification as done, which takes it out of the inbox.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Id of a code/notification instance (GitHub's thread id)."
+              }
+            },
+            "required": [
+              "instanceId"
+            ]
+          },
+          "targets": [
+            "code/notification"
+          ]
+        },
+        {
+          "name": "mark_all_read",
+          "description": "Mark every GitHub notification as read.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          },
+          "targets": [
+            "code/inbox"
+          ],
+          "requiresConfirmation": true
+        },
+        {
+          "name": "rerun_failed",
+          "description": "Rerun the failed jobs of the failing GitHub Actions runs on a pull request's latest commit, or on a repository's default branch.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Id of a code/pull_request or code/review_request instance (owner/repo#number), or of a code/build instance (owner/repo)."
+              }
+            },
+            "required": [
+              "instanceId"
+            ]
+          },
+          "targets": [
+            "code/pull_request",
+            "code/review_request",
+            "code/build"
+          ],
+          "requiresConfirmation": true
+        },
+        {
+          "name": "comment",
+          "description": "Post a comment, in the user's words, on a GitHub issue or pull request. Use when the user replies to something in their GitHub inbox.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Id of a code/notification instance, or owner/repo#number."
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000,
+                "description": "The comment, as the user said it."
+              }
+            },
+            "required": [
+              "instanceId",
+              "text"
+            ]
+          },
+          "targets": [
+            "code/notification",
+            "code/review_request",
+            "code/pull_request"
+          ]
+        },
+        {
+          "name": "new_issue",
+          "description": "Open a new GitHub issue, e.g. 'new issue: the login page is slow'. It goes to the repository chosen for issues in settings unless repo names another.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "description": "The issue's title, in the user's words."
+              },
+              "body": {
+                "type": "string",
+                "maxLength": 4000,
+                "description": "More detail, if the user gave any."
+              },
+              "repo": {
+                "type": "string",
+                "description": "owner/repo; one of the code/repo instances. Defaults to the one chosen for issues."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "targets": [
+            "code/repo"
+          ]
+        },
+        {
+          "name": "refresh",
+          "description": "Read GitHub again now instead of waiting for the next refresh.",
+          "parameters": {
+            "type": "object",
+            "properties": {}
+          },
+          "targets": [
+            "code/inbox"
+          ]
+        }
+      ]
+    }
+  }
+}
