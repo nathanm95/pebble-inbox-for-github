@@ -1,0 +1,641 @@
+{
+  "graph": {
+    "viewer": {
+      "login": "alex-kim"
+    },
+    "reviews": {
+      "issueCount": 3,
+      "nodes": [
+        {
+          "number": 42,
+          "title": "Retry failed webhooks with backoff",
+          "url": "https://github.com/acme/api/pull/42",
+          "isDraft": false,
+          "updatedAt": "2026-11-20T13:50:00Z",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "author": {
+            "login": "sam-lee"
+          },
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "state": "PENDING",
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "__typename": "CheckRun",
+                          "name": "test",
+                          "status": "IN_PROGRESS",
+                          "conclusion": null,
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "CheckRun",
+                          "name": "lint",
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "checkSuites": {
+                    "nodes": [
+                      {
+                        "status": "IN_PROGRESS",
+                        "conclusion": null,
+                        "workflowRun": {
+                          "databaseId": 9001,
+                          "workflow": {
+                            "name": "CI"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "login": "sam-lee"
+                },
+                "bodyText": "Ready for review. The retry loop now backs off.",
+                "createdAt": "2026-11-20T13:40:00Z"
+              }
+            ]
+          },
+          "latestReviews": {
+            "nodes": []
+          }
+        },
+        {
+          "number": 121,
+          "title": "Add pagination to search results",
+          "url": "https://github.com/acme/website/pull/121",
+          "isDraft": false,
+          "updatedAt": "2026-11-20T12:00:00Z",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "author": {
+            "login": "priya-n"
+          },
+          "repository": {
+            "nameWithOwner": "acme/website"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "state": "SUCCESS",
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "__typename": "CheckRun",
+                          "name": "test",
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "checkSuites": {
+                    "nodes": [
+                      {
+                        "status": "COMPLETED",
+                        "conclusion": "SUCCESS",
+                        "workflowRun": {
+                          "databaseId": 9002,
+                          "workflow": {
+                            "name": "CI"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "comments": {
+            "nodes": []
+          },
+          "latestReviews": {
+            "nodes": []
+          }
+        },
+        {
+          "number": 39,
+          "title": "Move config to environment variables",
+          "url": "https://github.com/acme/api/pull/39",
+          "isDraft": false,
+          "updatedAt": "2026-11-19T16:00:00Z",
+          "reviewDecision": "CHANGES_REQUESTED",
+          "author": {
+            "login": "jordan-w"
+          },
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "state": "FAILURE",
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "__typename": "CheckRun",
+                          "name": "test",
+                          "status": "COMPLETED",
+                          "conclusion": "FAILURE",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "CheckRun",
+                          "name": "lint",
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "checkSuites": {
+                    "nodes": [
+                      {
+                        "status": "COMPLETED",
+                        "conclusion": "FAILURE",
+                        "workflowRun": {
+                          "databaseId": 9101,
+                          "workflow": {
+                            "name": "CI"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "login": "jordan-w"
+                },
+                "bodyText": "Will fix tomorrow.",
+                "createdAt": "2026-11-19T16:30:00Z"
+              }
+            ]
+          },
+          "latestReviews": {
+            "nodes": [
+              {
+                "author": {
+                  "login": "sam-lee"
+                },
+                "state": "CHANGES_REQUESTED",
+                "bodyText": "",
+                "submittedAt": "2026-11-19T17:00:00Z"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "mine": {
+      "issueCount": 3,
+      "nodes": [
+        {
+          "number": 40,
+          "title": "Add a request ID to every log line",
+          "url": "https://github.com/acme/api/pull/40",
+          "isDraft": false,
+          "updatedAt": "2026-11-20T08:00:00Z",
+          "reviewDecision": "APPROVED",
+          "author": {
+            "login": "alex-kim"
+          },
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "state": "SUCCESS",
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "__typename": "CheckRun",
+                          "name": "test",
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "StatusContext",
+                          "context": "deploy/preview",
+                          "state": "SUCCESS"
+                        }
+                      ]
+                    }
+                  },
+                  "checkSuites": {
+                    "nodes": [
+                      {
+                        "status": "COMPLETED",
+                        "conclusion": "SUCCESS",
+                        "workflowRun": {
+                          "databaseId": 9203,
+                          "workflow": {
+                            "name": "CI"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "comments": {
+            "nodes": []
+          },
+          "latestReviews": {
+            "nodes": [
+              {
+                "author": {
+                  "login": "priya-n"
+                },
+                "state": "APPROVED",
+                "bodyText": "",
+                "submittedAt": "2026-11-20T08:00:00Z"
+              }
+            ]
+          }
+        },
+        {
+          "number": 119,
+          "title": "Fix the cache key for build assets",
+          "url": "https://github.com/acme/website/pull/119",
+          "isDraft": false,
+          "updatedAt": "2026-11-20T10:00:00Z",
+          "reviewDecision": "CHANGES_REQUESTED",
+          "author": {
+            "login": "alex-kim"
+          },
+          "repository": {
+            "nameWithOwner": "acme/website"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "state": "FAILURE",
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "__typename": "CheckRun",
+                          "name": "test",
+                          "status": "COMPLETED",
+                          "conclusion": "FAILURE",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "CheckRun",
+                          "name": "lint",
+                          "status": "COMPLETED",
+                          "conclusion": "FAILURE",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "CheckRun",
+                          "name": "eslint",
+                          "status": "COMPLETED",
+                          "conclusion": "TIMED_OUT",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "Lint"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "CheckRun",
+                          "name": "cancelled-job",
+                          "status": "COMPLETED",
+                          "conclusion": "CANCELLED",
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "CI"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "__typename": "StatusContext",
+                          "context": "deploy/preview",
+                          "state": "ERROR"
+                        },
+                        {
+                          "__typename": "StatusContext",
+                          "context": "coverage",
+                          "state": "SUCCESS"
+                        }
+                      ]
+                    }
+                  },
+                  "checkSuites": {
+                    "nodes": [
+                      {
+                        "status": "COMPLETED",
+                        "conclusion": "FAILURE",
+                        "workflowRun": {
+                          "databaseId": 9201,
+                          "workflow": {
+                            "name": "CI"
+                          }
+                        }
+                      },
+                      {
+                        "status": "COMPLETED",
+                        "conclusion": "FAILURE",
+                        "workflowRun": {
+                          "databaseId": 9202,
+                          "workflow": {
+                            "name": "Lint"
+                          }
+                        }
+                      },
+                      {
+                        "status": "COMPLETED",
+                        "conclusion": "SUCCESS",
+                        "workflowRun": null
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "login": "sam-lee"
+                },
+                "bodyText": "Looks good, one nit on the cache key.",
+                "createdAt": "2026-11-20T09:55:00Z"
+              }
+            ]
+          },
+          "latestReviews": {
+            "nodes": [
+              {
+                "author": {
+                  "login": "sam-lee"
+                },
+                "state": "CHANGES_REQUESTED",
+                "bodyText": "Include the lockfile hash.",
+                "submittedAt": "2026-11-20T09:58:00Z"
+              }
+            ]
+          }
+        },
+        {
+          "number": 12,
+          "title": "Sync notes over WebDAV",
+          "url": "https://github.com/sam-lee/notes-app/pull/12",
+          "isDraft": true,
+          "updatedAt": "2026-11-20T13:30:00Z",
+          "reviewDecision": null,
+          "author": {
+            "login": "alex-kim"
+          },
+          "repository": {
+            "nameWithOwner": "sam-lee/notes-app"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "state": "PENDING",
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "__typename": "CheckRun",
+                          "name": "build",
+                          "status": "QUEUED",
+                          "conclusion": null,
+                          "checkSuite": {
+                            "workflowRun": {
+                              "workflow": {
+                                "name": "Build"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "checkSuites": {
+                    "nodes": [
+                      {
+                        "status": "QUEUED",
+                        "conclusion": null,
+                        "workflowRun": {
+                          "databaseId": 9204,
+                          "workflow": {
+                            "name": "Build"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "comments": {
+            "nodes": []
+          },
+          "latestReviews": {
+            "nodes": []
+          }
+        }
+      ]
+    }
+  },
+  "builds": {
+    "acme/website": {
+      "nameWithOwner": "acme/website",
+      "defaultBranchRef": {
+        "name": "main",
+        "target": {
+          "abbreviatedOid": "3f9c2ab",
+          "messageHeadline": "Fix the cache key",
+          "committedDate": "2026-11-20T13:02:00Z",
+          "statusCheckRollup": {
+            "state": "FAILURE"
+          },
+          "checkSuites": {
+            "nodes": [
+              {
+                "status": "COMPLETED",
+                "conclusion": "FAILURE",
+                "workflowRun": {
+                  "databaseId": 9301,
+                  "workflow": {
+                    "name": "CI"
+                  }
+                }
+              },
+              {
+                "status": "COMPLETED",
+                "conclusion": "SUCCESS",
+                "workflowRun": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    "acme/api": {
+      "nameWithOwner": "acme/api",
+      "defaultBranchRef": {
+        "name": "main",
+        "target": {
+          "abbreviatedOid": "a17d04e",
+          "messageHeadline": "Log the request ID",
+          "committedDate": "2026-11-20T08:10:00Z",
+          "statusCheckRollup": {
+            "state": "SUCCESS"
+          },
+          "checkSuites": {
+            "nodes": [
+              {
+                "status": "COMPLETED",
+                "conclusion": "SUCCESS",
+                "workflowRun": {
+                  "databaseId": 9302,
+                  "workflow": {
+                    "name": "CI"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "sam-lee/notes-app": {
+      "nameWithOwner": "sam-lee/notes-app",
+      "defaultBranchRef": {
+        "name": "trunk",
+        "target": {
+          "abbreviatedOid": "c0ffee1",
+          "messageHeadline": "Start on WebDAV sync",
+          "committedDate": "2026-11-20T13:35:00Z",
+          "statusCheckRollup": {
+            "state": "PENDING"
+          },
+          "checkSuites": {
+            "nodes": [
+              {
+                "status": "IN_PROGRESS",
+                "conclusion": null,
+                "workflowRun": {
+                  "databaseId": 9303,
+                  "workflow": {
+                    "name": "Build"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "acme/empty": {
+      "nameWithOwner": "acme/empty",
+      "defaultBranchRef": {
+        "name": "main",
+        "target": {
+          "abbreviatedOid": "0000001",
+          "messageHeadline": "Initial commit",
+          "committedDate": "2026-10-01T09:00:00Z",
+          "statusCheckRollup": null,
+          "checkSuites": {
+            "nodes": []
+          }
+        }
+      }
+    }
+  }
+}

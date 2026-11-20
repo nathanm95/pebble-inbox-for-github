@@ -1,7 +1,8 @@
 // Runs the watch app's phone-side JavaScript (src/pkjs/index.js) in a vm, as the Pebble app would,
 // with a stub `Pebble` the tests drive: AppMessages are recorded and acked or nacked by hand,
-// source subscriptions are fed envelopes (made by the real plugin, through plugin.cjs's Host),
-// and timers only run when a test moves the clock on.
+// source subscriptions (one per item) are fed envelopes and actions are run (both by the real
+// plugin, through plugin.cjs's Host, when a test wires them up), and timers only run when a test
+// moves the clock on.
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -15,14 +16,22 @@ const MESSAGE_KEYS = {};
 PACKAGE.pebble.messageKeys.forEach((name, i) => { MESSAGE_KEYS[name] = 10000 + i; });
 
 class Phone {
-  /** options: { plugins: false } for a Pebble app with no plugin support. */
+  /**
+   * options:
+   *   plugins  false for a Pebble app with no plugin support
+   *   invoke   (config) => Promise<result> for Pebble.invokeAction; default: every action is ok
+   *   now      ms since the epoch the script's Date sees (moves with tick); default the real now
+   */
   constructor(options = {}) {
     this.sent = [];          // { message, ack, nack, answered }
     this.subscriptions = []; // { request, active }
+    this.invoked = [];       // each Pebble.invokeAction config, in order
+    this.invokeImpl = options.invoke || (async () => ({ ok: true, text: 'ok' }));
     this.listeners = {};
     this.logs = [];
     this.timers = [];
     this.now = 0;
+    this.epoch = options.now === undefined ? Date.now() : options.now;
     this.nextTimer = 1;
     const phone = this;
     const Pebble = {
@@ -39,6 +48,11 @@ class Phone {
         phone.subscriptions.push(sub);
         return { unsubscribe() { sub.active = false; } };
       };
+      Pebble.invokeAction = (config) => {
+        if (!config || !config.plugin || !config.action) throw new Error('plugin and action required');
+        phone.invoked.push(JSON.parse(JSON.stringify(config)));
+        return phone.invokeImpl(JSON.parse(JSON.stringify(config)));
+      };
     }
     const log = (level) => (...args) => phone.logs.push(level + ': ' + args.join(' '));
     const context = {
@@ -52,6 +66,19 @@ class Phone {
       clearTimeout: (id) => { phone.timers = phone.timers.filter((t) => t.id !== id); },
     };
     vm.createContext(context);
+    // The script's clock: the epoch given, moved on by tick().
+    vm.runInContext(`(function (phone) {
+      var Real = Date;
+      function Clock(...args) {
+        if (!new.target) return new Real(phone()).toString();
+        return args.length ? new Real(...args) : new Real(phone());
+      }
+      Clock.now = function () { return phone(); };
+      Clock.UTC = Real.UTC;
+      Clock.parse = Real.parse;
+      Clock.prototype = Real.prototype;
+      globalThis.Date = Clock;
+    })`, context)(() => phone.epoch + phone.now);
     const source = fs.readFileSync(PKJS, 'utf8');
     const run = vm.runInContext('(function (module, exports, require) {' + source + '\n})', context, { filename: PKJS });
     const module = { exports: {} };
@@ -76,17 +103,28 @@ class Phone {
     this.emit('appmessage', { payload: byNumber ? { [MESSAGE_KEYS.Cmd]: 1 } : { Cmd: 1 } });
   }
 
-  get subscription() {
-    return this.subscriptions.filter((s) => s.active)[0];
+  /** A message from the watch, by key name (or by number with byNumber). */
+  fromWatch(payload, byNumber) {
+    if (!byNumber) return this.emit('appmessage', { payload });
+    const numbered = {};
+    for (const [key, value] of Object.entries(payload)) numbered[MESSAGE_KEYS[key]] = value;
+    return this.emit('appmessage', { payload: numbered });
   }
 
-  /** The plugin answers the subscription, as the app's dispatcher does (a fresh copy of JSON). */
-  deliver(envelope) {
-    this.subscription.request.onData(JSON.parse(JSON.stringify(envelope)));
+  /** The active subscription to code/<item>. */
+  subscriptionFor(item) {
+    const sub = this.subscriptions.filter((s) => s.active && s.request.item === item)[0];
+    if (!sub) throw new Error('no subscription to ' + item);
+    return sub;
   }
 
-  fail(error) {
-    this.subscription.request.onError(JSON.parse(JSON.stringify(error)));
+  /** The plugin answers a subscription, as the app's dispatcher does (a fresh copy of JSON). */
+  deliver(item, envelope) {
+    this.subscriptionFor(item).request.onData(JSON.parse(JSON.stringify(envelope)));
+  }
+
+  fail(item, error) {
+    this.subscriptionFor(item).request.onError(JSON.parse(JSON.stringify(error)));
   }
 
   /** Messages sent and not yet answered. */

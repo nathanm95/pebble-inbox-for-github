@@ -1,0 +1,77 @@
+[
+  {
+    "id": 27373,
+    "name": "website",
+    "full_name": "acme/website",
+    "private": false,
+    "owner": {
+      "login": "acme",
+      "type": "Organization"
+    },
+    "html_url": "https://github.com/acme/website",
+    "url": "https://api.github.com/repos/acme/website",
+    "pushed_at": "2026-11-20T13:02:00Z",
+    "archived": false,
+    "has_issues": true
+  },
+  {
+    "id": 22417,
+    "name": "notes-app",
+    "full_name": "sam-lee/notes-app",
+    "private": false,
+    "owner": {
+      "login": "sam-lee",
+      "type": "User"
+    },
+    "html_url": "https://github.com/sam-lee/notes-app",
+    "url": "https://api.github.com/repos/sam-lee/notes-app",
+    "pushed_at": "2026-11-20T13:35:00Z",
+    "archived": false,
+    "has_issues": true
+  },
+  {
+    "id": 46430,
+    "name": "api",
+    "full_name": "acme/api",
+    "private": true,
+    "owner": {
+      "login": "acme",
+      "type": "Organization"
+    },
+    "html_url": "https://github.com/acme/api",
+    "url": "https://api.github.com/repos/acme/api",
+    "pushed_at": "2026-11-20T08:10:00Z",
+    "archived": false,
+    "has_issues": true
+  },
+  {
+    "id": 62511,
+    "name": "dotfiles",
+    "full_name": "alex-kim/dotfiles",
+    "private": false,
+    "owner": {
+      "login": "alex-kim",
+      "type": "User"
+    },
+    "html_url": "https://github.com/alex-kim/dotfiles",
+    "url": "https://api.github.com/repos/alex-kim/dotfiles",
+    "pushed_at": "2026-11-02T20:00:00Z",
+    "archived": false,
+    "has_issues": false
+  },
+  {
+    "id": 42878,
+    "name": "old-site",
+    "full_name": "acme/old-site",
+    "private": false,
+    "owner": {
+      "login": "acme",
+      "type": "Organization"
+    },
+    "html_url": "https://github.com/acme/old-site",
+    "url": "https://api.github.com/repos/acme/old-site",
+    "pushed_at": "2025-03-01T10:00:00Z",
+    "archived": true,
+    "has_issues": true
+  }
+]

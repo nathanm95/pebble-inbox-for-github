@@ -1,0 +1,272 @@
+[
+  {
+    "id": "1001",
+    "unread": true,
+    "reason": "review_requested",
+    "updated_at": "2026-11-20T13:50:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Retry failed webhooks with backoff",
+      "url": "https://api.github.com/repos/acme/api/pulls/42",
+      "latest_comment_url": "https://api.github.com/repos/acme/api/issues/comments/501",
+      "type": "PullRequest"
+    },
+    "repository": {
+      "id": 46430,
+      "name": "api",
+      "full_name": "acme/api",
+      "private": true,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/api",
+      "url": "https://api.github.com/repos/acme/api"
+    },
+    "url": "https://api.github.com/notifications/threads/1001",
+    "subscription_url": "https://api.github.com/notifications/threads/1001/subscription"
+  },
+  {
+    "id": "1002",
+    "unread": true,
+    "reason": "mention",
+    "updated_at": "2026-11-20T13:20:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Dark mode toggle forgets its setting",
+      "url": "https://api.github.com/repos/acme/website/issues/118",
+      "latest_comment_url": "https://api.github.com/repos/acme/website/issues/comments/502",
+      "type": "Issue"
+    },
+    "repository": {
+      "id": 27373,
+      "name": "website",
+      "full_name": "acme/website",
+      "private": false,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/website",
+      "url": "https://api.github.com/repos/acme/website"
+    },
+    "url": "https://api.github.com/notifications/threads/1002",
+    "subscription_url": "https://api.github.com/notifications/threads/1002/subscription"
+  },
+  {
+    "id": "1003",
+    "unread": true,
+    "reason": "ci_activity",
+    "updated_at": "2026-11-20T12:40:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "CI workflow run failed for main branch",
+      "url": null,
+      "latest_comment_url": null,
+      "type": "CheckSuite"
+    },
+    "repository": {
+      "id": 27373,
+      "name": "website",
+      "full_name": "acme/website",
+      "private": false,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/website",
+      "url": "https://api.github.com/repos/acme/website"
+    },
+    "url": "https://api.github.com/notifications/threads/1003",
+    "subscription_url": "https://api.github.com/notifications/threads/1003/subscription"
+  },
+  {
+    "id": "1004",
+    "unread": true,
+    "reason": "assign",
+    "updated_at": "2026-11-20T11:00:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Export notes as Markdown",
+      "url": "https://api.github.com/repos/sam-lee/notes-app/issues/7",
+      "latest_comment_url": "https://api.github.com/repos/sam-lee/notes-app/issues/7",
+      "type": "Issue"
+    },
+    "repository": {
+      "id": 22417,
+      "name": "notes-app",
+      "full_name": "sam-lee/notes-app",
+      "private": false,
+      "owner": {
+        "login": "sam-lee",
+        "type": "User"
+      },
+      "html_url": "https://github.com/sam-lee/notes-app",
+      "url": "https://api.github.com/repos/sam-lee/notes-app"
+    },
+    "url": "https://api.github.com/notifications/threads/1004",
+    "subscription_url": "https://api.github.com/notifications/threads/1004/subscription"
+  },
+  {
+    "id": "1005",
+    "unread": true,
+    "reason": "comment",
+    "updated_at": "2026-11-20T10:00:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Fix the cache key for build assets",
+      "url": "https://api.github.com/repos/acme/website/pulls/119",
+      "latest_comment_url": "https://api.github.com/repos/acme/website/issues/comments/503",
+      "type": "PullRequest"
+    },
+    "repository": {
+      "id": 27373,
+      "name": "website",
+      "full_name": "acme/website",
+      "private": false,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/website",
+      "url": "https://api.github.com/repos/acme/website"
+    },
+    "url": "https://api.github.com/notifications/threads/1005",
+    "subscription_url": "https://api.github.com/notifications/threads/1005/subscription"
+  },
+  {
+    "id": "1006",
+    "unread": true,
+    "reason": "team_mention",
+    "updated_at": "2026-11-20T09:00:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "RFC: versioned endpoints",
+      "url": null,
+      "latest_comment_url": null,
+      "type": "Discussion"
+    },
+    "repository": {
+      "id": 46430,
+      "name": "api",
+      "full_name": "acme/api",
+      "private": true,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/api",
+      "url": "https://api.github.com/repos/acme/api"
+    },
+    "url": "https://api.github.com/notifications/threads/1006",
+    "subscription_url": "https://api.github.com/notifications/threads/1006/subscription"
+  },
+  {
+    "id": "1007",
+    "unread": false,
+    "reason": "state_change",
+    "updated_at": "2026-11-20T13:59:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Rate limit headers missing on 429",
+      "url": "https://api.github.com/repos/acme/api/issues/37",
+      "latest_comment_url": "https://api.github.com/repos/acme/api/issues/37",
+      "type": "Issue"
+    },
+    "repository": {
+      "id": 46430,
+      "name": "api",
+      "full_name": "acme/api",
+      "private": true,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/api",
+      "url": "https://api.github.com/repos/acme/api"
+    },
+    "url": "https://api.github.com/notifications/threads/1007",
+    "subscription_url": "https://api.github.com/notifications/threads/1007/subscription"
+  },
+  {
+    "id": "1008",
+    "unread": true,
+    "reason": "subscribed",
+    "updated_at": "2026-11-20T08:00:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "v2.4.0",
+      "url": "https://api.github.com/repos/acme/website/releases/99",
+      "latest_comment_url": "https://api.github.com/repos/acme/website/releases/99",
+      "type": "Release"
+    },
+    "repository": {
+      "id": 27373,
+      "name": "website",
+      "full_name": "acme/website",
+      "private": false,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/website",
+      "url": "https://api.github.com/repos/acme/website"
+    },
+    "url": "https://api.github.com/notifications/threads/1008",
+    "subscription_url": "https://api.github.com/notifications/threads/1008/subscription"
+  },
+  {
+    "id": "1009",
+    "unread": true,
+    "reason": "security_alert",
+    "updated_at": "2026-11-20T07:00:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Vulnerable dependency in package-lock.json",
+      "url": null,
+      "latest_comment_url": null,
+      "type": "RepositoryVulnerabilityAlert"
+    },
+    "repository": {
+      "id": 46430,
+      "name": "api",
+      "full_name": "acme/api",
+      "private": true,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/api",
+      "url": "https://api.github.com/repos/acme/api"
+    },
+    "url": "https://api.github.com/notifications/threads/1009",
+    "subscription_url": "https://api.github.com/notifications/threads/1009/subscription"
+  },
+  {
+    "id": "1010",
+    "unread": true,
+    "reason": "mention",
+    "updated_at": "2026-11-20T06:00:00Z",
+    "last_read_at": null,
+    "subject": {
+      "title": "Search ignores accents",
+      "url": "https://api.github.com/repos/acme/website/issues/45",
+      "latest_comment_url": "https://api.github.com/repos/acme/website/issues/comments/504",
+      "type": "Issue"
+    },
+    "repository": {
+      "id": 27373,
+      "name": "website",
+      "full_name": "acme/website",
+      "private": false,
+      "owner": {
+        "login": "acme",
+        "type": "Organization"
+      },
+      "html_url": "https://github.com/acme/website",
+      "url": "https://api.github.com/repos/acme/website"
+    },
+    "url": "https://api.github.com/notifications/threads/1010",
+    "subscription_url": "https://api.github.com/notifications/threads/1010/subscription"
+  }
+]

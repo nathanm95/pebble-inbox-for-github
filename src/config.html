@@ -1,1 +1,344 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Inbox for GitHub</title></head><body><p>Settings are being written.</p></body></html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inbox for GitHub</title>
+  <style>
+    :root { color-scheme: light dark; --accent: #3a6fd8; --line: rgba(128,128,128,.25); --soft: rgba(128,128,128,.13);
+            --warn-bg: #fdecc8; --warn-fg: #5c3d00; --bad-bg: #fde0de; --bad-fg: #7a1410; }
+    @media (prefers-color-scheme: dark) {
+      :root { --accent: #6d9bff; --warn-bg: #4a3608; --warn-fg: #ffd98a; --bad-bg: #4d1714; --bad-fg: #ffb3ad; }
+    }
+    body { font: 16px -apple-system, system-ui, sans-serif; margin: 0; padding: 20px; line-height: 1.35; }
+    h1 { font-size: 20px; margin: 0 0 6px; }
+    h2 { font-size: 15px; margin: 26px 0 6px; opacity: .7; font-weight: 600; }
+    .hint { font-size: 13px; opacity: .7; margin: 0 0 12px; line-height: 1.4; }
+    #status { padding: 10px 12px; border-radius: 8px; background: var(--soft); font-size: 14px; min-height: 20px; }
+    #status.error { background: var(--bad-bg); color: var(--bad-fg); }
+    .card { padding: 12px; border-radius: 10px; background: var(--soft); margin-bottom: 12px; }
+    .card strong { font-size: 17px; }
+    .mono { font-family: ui-monospace, Menlo, monospace; font-size: 14px; }
+    .meta { font-size: 13px; opacity: .75; margin-top: 4px; }
+    .warn, .bad { font-size: 13px; padding: 8px 10px; border-radius: 8px; margin-top: 8px; line-height: 1.4; }
+    .warn { background: var(--warn-bg); color: var(--warn-fg); }
+    .bad { background: var(--bad-bg); color: var(--bad-fg); }
+    label.field { font-size: 12px; opacity: .75; display: block; margin-bottom: 4px; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    input[type=password], input[type=text] { flex: 1; min-width: 0; box-sizing: border-box; padding: 10px 12px; font-size: 15px;
+      border-radius: 8px; border: 1px solid rgba(128,128,128,.45); background: transparent; color: inherit; }
+    button { padding: 10px 14px; font-size: 15px; border-radius: 8px; border: 0; background: var(--accent); color: #fff; }
+    button.quiet { background: var(--soft); color: inherit; }
+    button:disabled { opacity: .5; }
+    a { color: var(--accent); }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    li .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; }
+    .chip { font-size: 11px; padding: 1px 6px; border-radius: 9px; background: var(--soft); margin-left: 6px; vertical-align: 1px; }
+    li label { font-size: 13px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+    input[type=checkbox], input[type=radio] { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
+    .switch { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
+    .switch span { flex: 1; }
+    .code { font: 600 28px ui-monospace, Menlo, monospace; letter-spacing: 3px; margin: 8px 0; user-select: all; }
+    .about { font-size: 12px; opacity: .6; line-height: 1.5; margin-top: 28px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <h1>Inbox for GitHub</h1>
+  <p class="hint">Your GitHub notifications, reviews, pull requests and builds on your watch, and as readings
+    for any watchface that shows plugins.</p>
+  <div id="status">Starting Inbox for GitHub…</div>
+
+  <h2>Account</h2>
+  <div id="account" class="card" hidden>
+    <div>Signed in as <strong id="login"></strong></div>
+    <div class="meta">Token <span id="masked" class="mono"></span></div>
+    <div class="meta" id="scopes"></div>
+    <div id="accountNotes"></div>
+    <div class="row" style="margin-top: 10px"><button type="button" class="quiet" id="signout">Sign out</button></div>
+  </div>
+  <form id="tokenForm" autocomplete="off">
+    <label class="field" for="token" id="tokenLabel">Personal access token (classic)</label>
+    <div class="row">
+      <input id="token" type="password" placeholder="ghp_…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <button type="submit" id="saveToken">Save</button>
+    </div>
+  </form>
+  <p class="hint" style="margin-top: 8px">Make one on GitHub with the <strong>notifications</strong> and <strong>repo</strong>
+    scopes: <a href="https://github.com/settings/tokens/new?scopes=notifications,repo&amp;description=Inbox%20for%20Pebble" id="tokenLink">new
+    classic token</a>. GitHub's notifications only work with a classic token. It stays on this phone, in Inbox for
+    GitHub's own storage, and is only ever sent to GitHub.</p>
+  <div id="device" hidden>
+    <button type="button" class="quiet" id="deviceStart">Sign in with GitHub instead</button>
+    <div id="deviceFlow" class="card" hidden>
+      <div>Enter this code at <a href="https://github.com/login/device" id="deviceLink">github.com/login/device</a>:</div>
+      <div class="code" id="deviceCode"></div>
+      <div class="meta" id="deviceWait">Waiting for GitHub…</div>
+    </div>
+  </div>
+
+  <h2>Inbox</h2>
+  <label class="switch"><input type="checkbox" id="participating">
+    <span>Only notifications I'm part of<br><span class="hint">Mentions, reviews, assignments and threads you've
+      commented on, without everything from repositories you watch.</span></span></label>
+
+  <h2>Repositories</h2>
+  <p class="hint" id="reposHint">Turn on <strong>Builds</strong> for up to six repositories to see the latest build on each
+    one's default branch, and choose the one that takes new issues you dictate on the watch.</p>
+  <p class="hint" id="reposNone" hidden>Sign in to choose repositories.</p>
+  <div class="bad" id="reposError" hidden></div>
+  <ul id="repos"></ul>
+
+  <h2>Demo</h2>
+  <label class="switch"><input type="checkbox" id="demo">
+    <span>Show demo data<br><span class="hint">Made-up people and repositories, to try the app without a token. Actions
+      only change the demo. Turn it off to see your own GitHub.</span></span></label>
+
+  <p class="about">Unofficial. Not made by or affiliated with GitHub. GitHub is a trademark of GitHub, Inc.<br>
+    Inbox for GitHub reads notifications at most once a minute, as GitHub asks, and pull requests and builds every two
+    minutes, with your token, from your phone.</p>
+
+<script>
+  // A bundled settings page may only reach the domains the plugin declares, so links out go
+  // through the app, which shows the user where they lead before opening their browser.
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="http"]');
+    if (!link) return;
+    event.preventDefault();
+    if (typeof Pebble.openUrl === 'function') Pebble.openUrl(link.href).catch(function () {});
+  });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var state = null;      // the plugin's last answer to 'load'
+  var maxBuilds = 6;
+  var polling = null;
+
+  function say(text, isError) {
+    $('status').textContent = text;
+    $('status').className = isError ? 'error' : '';
+  }
+
+  // The plugin reads GitHub and keeps the token and choices; this page only asks it to.
+  function send(message) { return Pebble.sendMessage('plugin', message); }
+
+  function note(className, text) {
+    var div = document.createElement('div');
+    div.className = className;
+    div.textContent = text;
+    return div;
+  }
+
+  function summary() {
+    var s = state.settings;
+    if (s.demo) return 'Showing demo data on the watch.';
+    if (!state.signedIn) return 'Not signed in. Paste a token below, or turn on the demo.';
+    var builds = s.builds.length ? s.builds.length + ' build' + (s.builds.length === 1 ? '' : 's') : 'no builds';
+    return 'Watching ' + builds + (s.issueRepo ? ', new issues go to ' + s.issueRepo : '') + '.';
+  }
+
+  function drawAccount() {
+    var account = state.account;
+    $('account').hidden = !account;
+    $('tokenLabel').textContent = account ? 'Use a different token' : 'Personal access token (classic)';
+    $('device').hidden = !state.deviceSignIn;
+    if (!account) return;
+    $('login').textContent = account.login ? '@' + account.login : '(unknown)';
+    $('masked').textContent = account.masked;
+    $('scopes').textContent = account.scopes ? 'Scopes: ' + (account.scopes.join(', ') || 'none') : '';
+    var notes = $('accountNotes');
+    notes.innerHTML = '';
+    if (account.problem) notes.appendChild(note('bad', account.problem));
+    (account.warnings || []).forEach(function (w) { notes.appendChild(note('warn', w)); });
+  }
+
+  function repoRow(repo, s) {
+    var li = document.createElement('li');
+    var name = document.createElement('span');
+    name.className = 'name';
+    name.textContent = repo.name;
+    if (repo.private) {
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = 'private';
+      name.appendChild(chip);
+    }
+    var on = s.builds.indexOf(repo.name) !== -1;
+    var builds = document.createElement('label');
+    var box = document.createElement('input');
+    box.type = 'checkbox';
+    box.checked = on;
+    box.disabled = !on && s.builds.length >= maxBuilds;
+    box.setAttribute('aria-label', 'Builds for ' + repo.name);
+    box.onchange = function () {
+      if (box.checked) s.builds.push(repo.name);
+      else s.builds = s.builds.filter(function (n) { return n !== repo.name; });
+      save();
+    };
+    builds.appendChild(box);
+    builds.appendChild(document.createTextNode('Builds'));
+    var issues = document.createElement('label');
+    var radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'issueRepo';
+    radio.checked = s.issueRepo === repo.name;
+    radio.disabled = repo.issues === false;
+    radio.setAttribute('aria-label', 'New issues go to ' + repo.name);
+    radio.onchange = function () {
+      if (radio.checked) s.issueRepo = repo.name;
+      save();
+    };
+    issues.appendChild(radio);
+    issues.appendChild(document.createTextNode('Issues'));
+    li.appendChild(name);
+    li.appendChild(builds);
+    li.appendChild(issues);
+    return li;
+  }
+
+  function drawRepos() {
+    var s = state.settings;
+    var list = $('repos');
+    list.innerHTML = '';
+    $('reposNone').hidden = state.signedIn;
+    $('reposHint').hidden = !state.signedIn;
+    $('reposError').hidden = !state.reposError;
+    $('reposError').textContent = state.reposError || '';
+    if (!state.signedIn) return;
+    if (s.issueRepo) {
+      var none = document.createElement('li');
+      var label = document.createElement('label');
+      var radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'issueRepo';
+      radio.onchange = function () { s.issueRepo = ''; save(); };
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode('No new issues from the watch'));
+      none.appendChild(label);
+      list.appendChild(none);
+    }
+    (state.repos || []).forEach(function (repo) { list.appendChild(repoRow(repo, s)); });
+  }
+
+  function draw() {
+    if (state.limits && state.limits.builds) maxBuilds = state.limits.builds;
+    drawAccount();
+    drawRepos();
+    $('participating').checked = state.settings.participating;
+    $('demo').checked = state.settings.demo;
+  }
+
+  async function save() {
+    var s = state.settings;
+    var reply = await send({ type: 'set', demo: s.demo, participating: s.participating, builds: s.builds, issueRepo: s.issueRepo });
+    if (!reply || !reply.ok) {
+      say('Couldn\'t save that. Try again.', true);
+      return;
+    }
+    state.settings = reply.settings;
+    draw();
+    say(summary() + ' The watch updates straight away.');
+  }
+
+  async function load(then) {
+    state = await send({ type: 'load' });
+    if (!state || !state.settings) {
+      say('Inbox for GitHub didn\'t answer. Close this page and open it again.', true);
+      return;
+    }
+    draw();
+    if (then) then(state);
+    else say(summary());
+  }
+
+  $('participating').onchange = function () { state.settings.participating = this.checked; save(); };
+  $('demo').onchange = function () { state.settings.demo = this.checked; save(); };
+
+  $('tokenForm').onsubmit = async function (event) {
+    event.preventDefault();
+    var token = $('token').value.trim();
+    if (!token) return;
+    $('saveToken').disabled = true;
+    say('Checking the token with GitHub…');
+    var reply = await send({ type: 'token', token: token });
+    $('saveToken').disabled = false;
+    if (reply && reply.settings) {
+      state = reply;
+      draw();
+    }
+    if (reply && reply.saved) {
+      $('token').value = '';
+      say('Signed in as @' + reply.account.login + '. ' + summary());
+    } else {
+      say((reply && reply.error) || 'Couldn\'t save the token. Try again.', true);
+    }
+  };
+
+  // Tap twice: an app's web view may not show confirm() dialogs at all.
+  var signingOut = null;
+  $('signout').onclick = async function () {
+    if (!signingOut) {
+      $('signout').textContent = 'Tap again to sign out';
+      signingOut = setTimeout(function () { signingOut = null; $('signout').textContent = 'Sign out'; }, 4000);
+      return;
+    }
+    clearTimeout(signingOut);
+    signingOut = null;
+    $('signout').textContent = 'Sign out';
+    var reply = await send({ type: 'signout' });
+    if (reply && reply.settings) {
+      state = reply;
+      draw();
+    }
+    say('Signed out. The token still works on GitHub until you delete it there.');
+  };
+
+  function stopPolling() {
+    if (polling) clearTimeout(polling);
+    polling = null;
+  }
+
+  async function poll(interval) {
+    stopPolling();
+    polling = setTimeout(async function () {
+      var reply = await send({ type: 'device_poll' });
+      if (!reply) return;
+      if (reply.device === 'pending') return poll(reply.interval || interval);
+      $('deviceFlow').hidden = true;
+      if (reply.device === 'done' && reply.saved) {
+        state = reply;
+        draw();
+        say('Signed in as @' + reply.account.login + '. ' + summary());
+      } else if (reply.device === 'denied') {
+        say('The sign-in was turned down on GitHub.', true);
+      } else if (reply.device === 'expired') {
+        say('The code ran out. Try again.', true);
+      } else {
+        say(reply.error || 'GitHub couldn\'t finish the sign-in. Paste a token instead.', true);
+      }
+    }, interval * 1000);
+  }
+
+  $('deviceStart').onclick = async function () {
+    var reply = await send({ type: 'device_start' });
+    if (!reply || reply.error) {
+      say((reply && reply.error) || 'GitHub couldn\'t start a sign-in.', true);
+      return;
+    }
+    $('deviceCode').textContent = reply.userCode;
+    $('deviceLink').href = reply.verificationUri;
+    $('deviceLink').textContent = reply.verificationUri.replace(/^https:\/\//, '');
+    $('deviceFlow').hidden = false;
+    say('Enter the code on GitHub, then come back here.');
+    poll(reply.interval);
+  };
+
+  // The plugin is only started when this page opens, so wait for it to say it's running.
+  Pebble.addEventListener('ready', function (event) {
+    if (event.target !== 'plugin') return;
+    say('Reading GitHub…');
+    load();
+  });
+</script>
+</body>
+</html>

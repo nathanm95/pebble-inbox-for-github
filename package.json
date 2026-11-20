@@ -186,7 +186,8 @@
               "shortText"
             ],
             "checks": [
-              "shortText"
+              "shortText",
+              "longText"
             ],
             "failing": [
               "boolean"

@@ -1,0 +1,71 @@
+{
+  "https://api.github.com/repos/acme/api/issues/comments/501": {
+    "id": 501,
+    "user": {
+      "login": "sam-lee",
+      "id": 93375,
+      "type": "User"
+    },
+    "created_at": "2026-11-20T13:49:00Z",
+    "body": "Looks good, one nit on the **retry loop**:\r\n\r\n> Retries up to five times\r\n\r\nCap the delay at `30 s` so a dead endpoint doesn't hold the queue. See [the docs](https://example.com/retries).\r\n\r\n```js\r\nconst delay = Math.min(30000, base * 2 ** n);\r\n```\r\n<!-- reviewed with the checklist -->"
+  },
+  "https://api.github.com/repos/acme/website/issues/comments/502": {
+    "id": 502,
+    "user": {
+      "login": "priya-n",
+      "id": 36916,
+      "type": "User"
+    },
+    "created_at": "2026-11-20T13:19:00Z",
+    "body": "@alex-kim could you check this on Safari? It resets after a reload.\n\n![screenshot](https://example.com/shot.png)"
+  },
+  "https://api.github.com/repos/sam-lee/notes-app/issues/7": {
+    "number": 7,
+    "title": "Export notes as Markdown",
+    "user": {
+      "login": "jordan-w",
+      "id": 68116,
+      "type": "User"
+    },
+    "body": "## What\n\nAn *Export* menu item that writes each note as a `.md` file.\n\n- [ ] keep front matter\n- [ ] keep tags"
+  },
+  "https://api.github.com/repos/acme/website/issues/comments/503": {
+    "id": 503,
+    "user": {
+      "login": "sam-lee",
+      "id": 93375,
+      "type": "User"
+    },
+    "created_at": "2026-11-20T09:58:00Z",
+    "body": "Include the lockfile hash in the key, or a dependency bump won't bust the cache."
+  },
+  "https://api.github.com/repos/acme/api/issues/37": {
+    "number": 37,
+    "user": {
+      "login": "jordan-w",
+      "id": 68116,
+      "type": "User"
+    },
+    "body": "Closed in #41.",
+    "state": "closed"
+  },
+  "https://api.github.com/repos/acme/website/releases/99": {
+    "id": 99,
+    "tag_name": "v2.4.0",
+    "author": {
+      "login": "sam-lee",
+      "id": 93375,
+      "type": "User"
+    },
+    "body": "### Highlights\n\n* Faster search\n* Dark mode fixes\n* A new export menu"
+  },
+  "https://api.github.com/repos/acme/website/issues/comments/504": {
+    "id": 504,
+    "user": {
+      "login": "priya-n",
+      "id": 36916,
+      "type": "User"
+    },
+    "body": "Searching for café finds nothing."
+  }
+}
